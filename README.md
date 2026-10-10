@@ -1,23 +1,7 @@
-# Q-LAB V0.1
+# Q-LAB V0.4 fusionnée
 
-Simulateur quantique monoparticule (1 qubit) local, responsive, sans backend.
+Préserve le laboratoire V0.3 (sphère de Bloch et expériences à deux qubits) et ajoute l'éditeur 1–5 qubits sous `/circuit-builder.html`, accessible depuis l'accueil.
 
-## Démarrer
+Déploiement : remplacer à la racine du dépôt les fichiers correspondants, puis ajouter `circuit-builder.html` et `vite.config.js`. Ne pas mettre le dossier entier dans le dépôt. Vercel : preset Vite, build `npm run build`, output `dist`.
 
-```bash
-npm install
-npm run dev
-```
-
-Ouvrir l'URL affichée par Vite. Pour produire une version statique : `npm run build` (dossier `dist/`).
-
-## Fonctions
-
-- État complexe à deux amplitudes, portes X/Y/Z/H/S/T/RY(π/4).
-- Historique de portes, probabilités, vecteur de Bloch, projection X-Z.
-- 1000 mesures simulées selon la règle de Born.
-- Réinitialisation |0⟩.
-
-## Limites
-
-Pas de processeur quantique réel, pas de circuit multi-qubits, pas de sauvegarde cloud. Les 1000 mesures sont des tirages indépendants et ne modifient pas l'état du simulateur. La sphère représente uniquement une projection X-Z.
+Test local : `npm install && npm run build`. Ne pas déployer si la compilation échoue.

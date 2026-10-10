@@ -2,3 +2,5 @@
 
 .bloch-view{display:flex;align-items:center;flex-direction:column}.bloch-view svg{width:100%;max-width:340px;touch-action:none;user-select:none;cursor:grab}.bloch-view svg:active{cursor:grabbing}.bloch-view p{font-size:12px;text-align:center;margin:0 0 12px}
 .two-panel{margin-top:20px}.two-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.two-row label{font-size:13px;color:#b8b4d7}.two-row select{display:block;margin-top:8px;padding:12px;background:#101123;color:white;border:1px solid #4b4676;border-radius:9px}.two-buttons{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.two-buttons button{flex:1;min-width:76px}.two-panel .prob{max-width:680px}.note{font-size:12px}
+
+.builder-link{display:inline-block;padding:14px 18px;background:#805cf2;color:#fff;border-radius:10px;text-decoration:none;font-weight:700}
