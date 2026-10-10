@@ -11,6 +11,7 @@ export default defineConfig({
         main: resolve(root, 'index.html'),
         builder: resolve(root, 'circuit-builder.html'),
         teleportation: resolve(root, 'teleportation.html'),
+        grover: resolve(root, 'grover.html')
       },
     },
   },
