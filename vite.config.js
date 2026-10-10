@@ -13,7 +13,8 @@ export default defineConfig({
         teleportation: resolve(root, 'teleportation.html'),
         grover: resolve(root, 'grover.html'),
         bb84: resolve(root, 'bb84.html'),
-        errorCorrection: resolve(root, 'error-correction.html')
+        errorCorrection: resolve(root, 'error-correction.html'),
+        shor: resolve(root, 'shor.html')
       }
     }
   }
