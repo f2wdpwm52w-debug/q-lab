@@ -12,7 +12,8 @@ export default defineConfig({
         builder: resolve(root, 'circuit-builder.html'),
         teleportation: resolve(root, 'teleportation.html'),
         grover: resolve(root, 'grover.html'),
-        bb84: resolve(root, 'bb84.html')
+        bb84: resolve(root, 'bb84.html'),
+        errorCorrection: resolve(root, 'error-correction.html')
       }
     }
   }
