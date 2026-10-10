@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(root, 'index.html'),
         builder: resolve(root, 'circuit-builder.html'),
+        lab: resolve(root, 'lab.html'),
         teleportation: resolve(root, 'teleportation.html'),
         grover: resolve(root, 'grover.html'),
         bb84: resolve(root, 'bb84.html'),
