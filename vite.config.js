@@ -1,8 +1,17 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
-  build: { rollupOptions: { input: {
-    main: resolve(import.meta.dirname, 'index.html'),
-    builder: resolve(import.meta.dirname, 'circuit-builder.html')
-  } } }
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(root, 'index.html'),
+        builder: resolve(root, 'circuit-builder.html'),
+        teleportation: resolve(root, 'teleportation.html'),
+      },
+    },
+  },
 });
