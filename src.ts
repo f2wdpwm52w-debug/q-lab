@@ -30,3 +30,29 @@ function render(){const p0=Math.max(0,Math.min(1,norm(state[0])));const p1=1-p0;
 document.querySelector<HTMLDivElement>('#app')!.innerHTML=`<main><header><div class="brand">◈ Q-LAB <small>QUANTUM COMPUTING STUDIO</small></div><span class="tag">● LOCAL SIMULATOR</span></header><section class="hero"><p class="eyebrow">EXPERIMENT • LEARN • DISCOVER</p><h1>Explore the <em>quantum</em> world.</h1><p>Manipule un qubit, construis un circuit et observe ses probabilités en temps réel.</p></section><section class="layout"><div class="panel"><div class="panelhead"><h2>01 / Quantum gates</h2><span>1 QUBIT</span></div><p>Applique une porte au qubit initial |0⟩.</p><div class="gates">${['X','Y','Z','H','S','T','RY'].map(g=>`<button data-gate="${g}" title="Porte ${g}">${g}</button>`).join('')}</div><div class="actions"><button id="reset" class="secondary">↺ Réinitialiser</button><button id="measure" class="primary">▶ Mesurer × 1000</button></div><h3>Circuit</h3><div class="circuit"><span>|0⟩</span>${history.map(g=>`<b>${g}</b>`).join('')}<span>→</span></div><h3>Vecteur d'état</h3><div class="vector">|ψ⟩ = (${complex(state[0])})|0⟩ + (${complex(state[1])})|1⟩</div></div><div class="panel"><div class="panelhead"><h2>02 / Probabilities</h2><span>LIVE</span></div><div class="prob"><div><span>|0⟩</span><strong>${(p0*100).toFixed(2)}%</strong></div><div class="bar"><i style="width:${p0*100}%"></i></div></div><div class="prob"><div><span>|1⟩</span><strong>${(p1*100).toFixed(2)}%</strong></div><div class="bar violet"><i style="width:${p1*100}%"></i></div></div><h3>Bloch vector (x, y, z)</h3><div class="vector">(${fmt(x)}, ${fmt(y)}, ${fmt(z)})</div><div class="bloch-view">${blochSVG(x,y,z)}<p>Fais glisser la sphère pour la faire tourner.</p></div><h3>1000 measurements</h3>${shots?`<div class="results">|0⟩ : ${shots[0]} &nbsp; |1⟩ : ${shots[1]}</div>`:'<p>Appuie sur « Mesurer » pour simuler les résultats.</p>'}</div></section><footer>Q-LAB V0.2 · Simulation classique d'un qubit · Aucune connexion à un processeur quantique réel</footer></main>`;
 document.querySelectorAll<HTMLButtonElement>('[data-gate]').forEach(b=>b.onclick=()=>gate(b.dataset.gate!));document.querySelector<HTMLButtonElement>('#reset')!.onclick=reset;document.querySelector<HTMLButtonElement>('#measure')!.onclick=measure;attachSphere();}
 render();
+
+// Two-qubit laboratory: separate state so the existing Bloch experiment is preserved.
+import {zero as twoZero,single as twoSingle,cnot as twoCnot,bell as makeBell,probabilities as twoProb,sample as twoSample,amplitude as twoAmplitude,type QState} from './twoqubit';
+let twoState:QState=twoZero();let twoHistory:string[]=[];let twoShots:number[]|null=null;
+const labels=['00','01','10','11'];
+function renderTwo(){
+ const host=document.querySelector<HTMLDivElement>('#two-qubit');if(!host)return;
+ const ps=twoProb(twoState);
+ host.innerHTML=`<div class="panelhead"><h2>03 / Two-qubit laboratory</h2><span>2 QUBITS</span></div><p>Construis un circuit à deux qubits, puis mesure les corrélations.</p>
+ <div class="two-row"><label>Qubit cible <select id="target"><option value="0">q0 (gauche)</option><option value="1">q1 (droite)</option></select></label><div class="two-buttons"><button data-two="H">H</button><button data-two="X">X</button><button data-two="Z">Z</button></div></div>
+ <div class="two-buttons"><button data-two="CNOT0">CNOT q0 → q1</button><button data-two="CNOT1">CNOT q1 → q0</button></div>
+ <h3>États de Bell (préparations)</h3><div class="two-buttons">${['Phi+','Phi-','Psi+','Psi-'].map(n=>`<button data-bell="${n}">Φ/Ψ ${n.slice(-1)} (${n.startsWith('Phi')?'Φ':'Ψ'})</button>`).join('')}</div>
+ <h3>Circuit / opérations</h3><div class="circuit"><span>|00⟩</span>${twoHistory.map(h=>`<b>${h}</b>`).join('')}<span>→</span></div>
+ <h3>Amplitudes complexes</h3><div class="vector">${labels.map((l,i)=>`|${l}⟩: ${twoAmplitude(twoState[i])}`).join('<br>')}</div>
+ <h3>Probabilités</h3>${labels.map((l,i)=>`<div class="prob"><div><span>|${l}⟩</span><strong>${(ps[i]*100).toFixed(2)}%</strong></div><div class="bar ${i%2?'violet':''}"><i style="width:${ps[i]*100}%"></i></div></div>`).join('')}
+ <div class="actions"><button id="two-reset" class="secondary">↺ Réinitialiser 2 qubits</button><button id="two-measure" class="primary">▶ Mesurer × 1000</button></div>
+ <h3>Résultats</h3>${twoShots?`<div class="results">${labels.map((l,i)=>`|${l}⟩ : ${twoShots![i]}`).join(' · ')}</div>`:'<p>Appuie sur « Mesurer » pour échantillonner 1000 fois.</p>'}
+ <p class="note">Simulation classique idéale, sans bruit. Les mesures n’altèrent pas l’état du circuit.</p>`;
+ host.querySelectorAll<HTMLButtonElement>('[data-two]').forEach(b=>b.onclick=()=>{const g=b.dataset.two!;if(g.startsWith('CNOT'))twoState=twoCnot(twoState,g==='CNOT0'?0:1);else{const t=Number(host.querySelector<HTMLSelectElement>('#target')!.value) as 0|1;twoState=twoSingle(twoState,g as 'H'|'X'|'Z',t)}twoHistory.push(g);twoShots=null;renderTwo()});
+ host.querySelectorAll<HTMLButtonElement>('[data-bell]').forEach(b=>b.onclick=()=>{const name=b.dataset.bell as 'Phi+'|'Phi-'|'Psi+'|'Psi-';twoState=makeBell(name);twoHistory=[`Bell ${name}`];twoShots=null;renderTwo()});
+ host.querySelector<HTMLButtonElement>('#two-reset')!.onclick=()=>{twoState=twoZero();twoHistory=[];twoShots=null;renderTwo()};
+ host.querySelector<HTMLButtonElement>('#two-measure')!.onclick=()=>{twoShots=twoSample(twoState);renderTwo()};
+}
+const originalRender=render;
+render=function(){originalRender();const layout=document.querySelector('.layout');if(layout){const section=document.createElement('section');section.className='panel two-panel';section.id='two-qubit';layout.after(section)}const footer=document.querySelector('footer');if(footer)footer.textContent='Q-LAB V0.3 · Simulations classiques idéales · Aucun processeur quantique réel';renderTwo()};
+render();
