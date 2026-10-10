@@ -1,1 +1,18 @@
-<!doctype html><html lang="fr"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#09091a"/><title>Q-LAB | Quantum Computing Studio</title></head><body><div id="app"></div><script type="module" src="/src.ts"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09091a" />
+  <title>Q-LAB | Quantum Computing Studio</title>
+  <style>
+    #qlab-teleport-link{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:9999;display:flex;align-items:center;gap:9px;padding:13px 17px;border-radius:16px;background:linear-gradient(135deg,#7354dd,#3d86c6);color:#fff;text-decoration:none;font:600 14px system-ui,-apple-system,sans-serif;box-shadow:0 6px 24px #0007;border:1px solid #ffffff44}
+    #qlab-teleport-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <a id="qlab-teleport-link" href="/teleportation.html" aria-label="Ouvrir le module de téléportation quantique">⚛ Téléportation quantique ↗</a>
+  <script type="module" src="/src.ts"></script>
+</body>
+</html>
