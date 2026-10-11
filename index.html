@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09091a" />
+  <title>Q-LAB | Quantum Computing Studio</title>
+  <style>
+    .qlab-nav-toggle{position:fixed;right:18px;bottom:20px;z-index:10001;background:linear-gradient(135deg,#8b5cf6,#4f46e5);color:white;border:1px solid #a78bfa;border-radius:999px;padding:13px 18px;font:600 14px system-ui,sans-serif;box-shadow:0 8px 30px #0009;cursor:pointer}
+    .qlab-nav-panel{position:fixed;right:16px;bottom:78px;z-index:10000;width:min(330px,calc(100vw - 32px));max-height:calc(100dvh - 115px);overflow-y:auto;box-sizing:border-box;padding:17px;background:#131327;color:#f8f7ff;border:1px solid #51417e;border-radius:18px;box-shadow:0 15px 40px #000b;font:14px system-ui,sans-serif}
+    .qlab-nav-panel[hidden]{display:none}
+    .qlab-token-link{background:linear-gradient(110deg,#203d58,#302350)!important;border:1px solid #4f82aa;color:#f2faff!important}
+    .qlab-token-note{display:block;font-size:11px;color:#b7b3d2;line-height:1.45;margin:10px 3px 0;overflow-wrap:anywhere}
+    .qlab-nav-panel strong{display:block;margin:0 0 12px;font-size:16px}
+    .qlab-nav-panel a{display:block;margin:8px 0;padding:12px;border-radius:11px;background:#23213e;color:#eeeaff;text-decoration:none}
+    .qlab-nav-panel a:focus-visible,.qlab-nav-toggle:focus-visible{outline:2px solid #c4b5fd;outline-offset:3px}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <nav class="qlab-nav-panel" id="qlab-navigation" aria-label="Navigation Q-LAB" hidden>
+    <strong>Explorer Q-LAB</strong>
+    <a href="/">🏠 Accueil — Simulateur quantique</a>
+    <a href="/circuit-builder.html">⚛️ Éditeur de circuits</a>
+    <a href="/lab.html">🧪 Mon laboratoire V1.1</a>
+    <a href="/challenge.html">⚡ Défis quantiques — Challenge #001</a>
+    <a class="qlab-token-link" href="https://pump.fun/coin/C1JjUaKcH3SwYz818tqsBfpE8CAbWDkSb9gVfW7apump" target="_blank" rel="noopener noreferrer">⚛️ QLAB Token — Voir sur Pump.fun ↗</a>
+    <a class="qlab-token-link" href="https://x.com/QLABQUANTUM" target="_blank" rel="noopener noreferrer">𝕏 Communauté Q-LAB — X ↗</a>
+    <a href="/teleportation.html">🔗 Téléportation quantique</a>
+    <a href="/grover.html">🔎 Algorithme de Grover</a>
+    <a href="/bb84.html">🔐 Cryptographie quantique BB84</a>
+    <a href="/error-correction.html">🛡️ Correction d'erreurs quantiques</a>
+    <a href="/shor.html">🔢 Algorithme de Shor</a>
+    <small class="qlab-token-note">Token communautaire indépendant sur Solana. Aucun achat requis pour utiliser Q-LAB. Contrat : C1JjUaKcH3SwYz818tqsBfpE8CAbWDkSb9gVfW7apump</small>
+  </nav>
+  <button type="button" class="qlab-nav-toggle" id="qlab-nav-toggle" aria-expanded="false" aria-controls="qlab-navigation">☰ Modules</button>
+  <script>
+    (() => {
+      const button = document.getElementById('qlab-nav-toggle');
+      const panel = document.getElementById('qlab-navigation');
+      button.addEventListener('click', () => {
+        panel.hidden = !panel.hidden;
+        button.setAttribute('aria-expanded', String(!panel.hidden));
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          panel.hidden = true;
+          button.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+  <script type="module" src="/src.ts"></script>
+</body>
+</html>
